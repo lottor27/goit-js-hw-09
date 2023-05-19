@@ -1,4 +1,5 @@
 import flatpickr from 'flatpickr';
+import Notiflix from 'notiflix';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -18,14 +19,18 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
+
     const startTime = Date.now();
     const currentTime = selectedDates[0];
-
     const deltaTime = currentTime - startTime;
     const timeComponents = convertMs(deltaTime);
 
     if (timeComponents.seconds <= 0) {
-      window.alert('Please choose a date in the future');
+      Notiflix.Report.failure(
+        'Please choose a date in the future',
+        'Travel to the past will break the space-time continuum',
+        'Ok, I will not do it again'
+      );
       return;
     } else {
       startBtn.removeAttribute('disabled');
@@ -37,25 +42,45 @@ const options = {
   },
 };
 
-const timerFlat = flatpickr(inputField, options);
-const wwww = timerFlat.value;
 
-console.log(wwww);
+
+const timerFlat = flatpickr(inputField, options);
+
 
 const timer = {
+  timerId: null,
+  isActive: false,
   start() {
-    const startTimeTimer = timeComponents;
-    setInterval(() => {
-      const currentTimeTimer = this.selectedDates;
-      const deltaTimeTimer = currentTimeTimer - startTimeTimer;
+    if (this.isActive) {
+      return
+    }
+    const startTimeTimer = timerFlat.selectedDates[0];
+    this.timerId = setInterval(() => {
+      this.isActive = true;
+      const currentTimeTimer = Date.now();
+      const deltaTimeTimer = (currentTimeTimer - startTimeTimer) * -1;
       const timeComponentsTimer = convertMs(deltaTimeTimer);
+      if (deltaTimeTimer <= 0) {
+        clearInterval(this.timerId);
+        console.log('Ну все же');
+        this.isActive = false;
+        startBtn.setAttribute('disabled', 'disabled');
+        return
+      }
+      console.log(timeComponentsTimer);
+      days.textContent = timeComponentsTimer.days;
+      hours.textContent = timeComponentsTimer.hours;
+      minutes.textContent = timeComponentsTimer.minutes;
+      seconds.textContent = timeComponentsTimer.seconds;
     }, 1000);
   },
+  stop() {
+
+  }
 };
 
-//  timer.start();
 
-startBtn.addEventListener('click', timer.start());
+startBtn.addEventListener('click', timer.start);
 
 function pad(value) {
   return String(value).padStart(2, '0');
