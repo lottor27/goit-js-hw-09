@@ -6,3 +6,10 @@ function createPromise(position, delay) {
     // Reject
   }
 }
+
+
+function createPromise(position, delay) {
+  console.log("Helloy");
+}
+
+console.log('Helloy');
