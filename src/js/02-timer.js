@@ -2,18 +2,15 @@ import flatpickr from 'flatpickr';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
 
-
 const inputField = document.querySelector('#datetime-picker');
 
 const startBtn = document.querySelector('button[data-start]');
-// const days = document.querySelector('[data-days]');
-// const hours = document.querySelector('[data-hours]');
-// const minutes = document.querySelector('[data-minutes]');
-// const seconds = document.querySelector('[data-seconds]');
+const days = document.querySelector('[data-days]');
+const hours = document.querySelector('[data-hours]');
+const minutes = document.querySelector('[data-minutes]');
+const seconds = document.querySelector('[data-seconds]');
 
-
-
-// startBtn.setAttribute('disabled', 'disabled');
+startBtn.setAttribute('disabled', 'disabled');
 
 const options = {
   enableTime: true,
@@ -21,27 +18,67 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-      const qqq = timer.input.value;
-      console.log(qqq);
-      // console.log(selectedDates[0].input.value);
-    //   console.dir(selectedDates[0].getSeconds);
-    //   console.log(selectedDates[0].getSeconds);
+    const startTime = Date.now();
+    const currentTime = selectedDates[0];
+
+    const deltaTime = currentTime - startTime;
+    const timeComponents = convertMs(deltaTime);
+
+    if (timeComponents.seconds <= 0) {
+      window.alert('Please choose a date in the future');
+      return;
+    } else {
+      startBtn.removeAttribute('disabled');
+      days.textContent = timeComponents.days;
+      hours.textContent = timeComponents.hours;
+      minutes.textContent = timeComponents.minutes;
+      seconds.textContent = timeComponents.seconds;
+    }
   },
 };
 
-// const date = new Date();
-// console.log(date.getTime());
-const timer = flatpickr(inputField, options);
-const wwww = timer.input.value;
+const timerFlat = flatpickr(inputField, options);
+const wwww = timerFlat.value;
 
 console.log(wwww);
 
+const timer = {
+  start() {
+    const startTimeTimer = timeComponents;
+    setInterval(() => {
+      const currentTimeTimer = this.selectedDates;
+      const deltaTimeTimer = currentTimeTimer - startTimeTimer;
+      const timeComponentsTimer = convertMs(deltaTimeTimer);
+    }, 1000);
+  },
+};
 
+//  timer.start();
 
+startBtn.addEventListener('click', timer.start());
 
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
 
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
 
+  // Remaining days
+  const days = pad(Math.floor(ms / day));
+  // Remaining hours
+  const hours = pad(Math.floor((ms % day) / hour));
+  // Remaining minutes
+  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
+  // Remaining seconds
+  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
 
+  return { days, hours, minutes, seconds };
+}
 
 
 
@@ -80,22 +117,9 @@ console.log(wwww);
 // console.log(typeof qqq);
 // console.dir(timer.dayElement);
 
-
 // console.dir(inputField.element);
 // function selectedDates() {
 // console.log(1);
 // };
 
-
-
-
 // days.part.value
-
-
-
-
-
-
-
-
-
