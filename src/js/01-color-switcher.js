@@ -27,9 +27,9 @@ function onClickStartEvent(event) {
         const onlineColorBody = bodyColor.style.backgroundColor;
         
     console.log(onlineColorBody)
-    
-    }, 1000);
     return timerId;
+    }, 1000);
+    
     
 };
 
