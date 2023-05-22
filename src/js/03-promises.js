@@ -17,20 +17,18 @@ function onSubmit(event) {
   const firstDelay = delayInput.value;
   const inputDelay = stepInput.value;
   const amount = amountInput.value;
-
-  console.log(firstDelay);
-  console.log(inputDelay);
-  console.log(amount);
-
+let delay = firstDelay;
   for (let i = 1; i <= amount; i += 1) {
-    let delay = Number(i * `${+inputDelay}`) + +Number(inputDelay); 
+    let delay = Number(i * inputDelay) + Number(inputDelay); 
+
     const promise = createPromise(amount, delay);
+
     promise
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay} ms`);
+      .then(({ amount, delay }) => {
+        Notiflix.Notify.success(`Fulfilled promise ${i} in ${delay} ms`);
       })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(`Rejected promise ${position} in ${delay} ms`);
+      .catch(({ amount, delay }) => {
+        Notiflix.Notify.failure(`Rejected promise ${i} in ${delay} ms`);
       });
   }
 
@@ -52,29 +50,3 @@ function createPromise(amount, delay) {
 }
 
  
-
-
-
-// createPromise(2, 1500)
-  
-
-//  const conter = () => {
-//     for (let i = 0; i < position; i++) {
-//       console.log(i);
-//       createPromise(position, delay);
-//     }
-//     console.log('Конец работы');
-//   }
-//   const timerId = setTimeout(conter, `${firstDelay}`);
-
-
-  // for (let i = 0; i <= position; i += 1) {
-    //   setTimeout(() => {
-    //     createPromise();
-    //     console.log(i);
-       
-    //   }, `${delay}`);
-    //    delay += inputDelay;
-    //   // 
-    // }
-   
