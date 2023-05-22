@@ -17,7 +17,7 @@ function onSubmit(event) {
   const inputDelay = stepInput.value;
   const amount = amountInput.value;
   if (amount <= 0 && inputDelay <= 0 && firstDelay <= 0) {
-    Notiflix.Notify.warning("No");
+    Notiflix.Report.warning("minus", "I can't rewind the past");
   } else {
     for (let i = 0; i <= amount - 1; i += 1) {
       let delay = Number(i * inputDelay) + Number(firstDelay);
@@ -46,31 +46,25 @@ function createPromise(amount, delay) {
     }, delay);
   });
 }
-
+form.addEventListener('click', checkValid);
 form.addEventListener('keyup', checkValid);
 
 function checkValid() {
   
-  const firstCheckValid = delayInput.value.length;
-  const delayStepValid = stepInput.value.length;
-  console.log(firstCheckValid);
-  console.log(delayStepValid);
-  if (firstCheckValid !== 0 && delayStepValid !== 0) {
+  const checkAllValid =
+    delayInput.value.length !== 0 &&
+    stepInput.value.length !== 0 &&
+    amountInput.value.length !== 0;
+  const checkAllMinus =
+    delayInput.value.length === 0 &&
+    stepInput.value.length === 0 &&
+    amountInput.value.length === 0;
+  
+  if (checkAllValid) {
     bntSubmit.removeAttribute('disabled');
-  } else if (firstCheckValid === 0 || delayStepValid === 0) {
+  } else if (checkAllMinus) {
     bntSubmit.setAttribute('disabled', 'disabled');
   }
 }
 
 
-
-// function checkValid() {
-//   console.log(delayInput.validity.valid);
-//   console.log(stepInput.validity.valid);
-
-//   if (delayInput.validity.valid && stepInput.validity.valid) {
-//     bntSubmit.removeAttribute('disabled');
-//   } else if (!delayInput.validity.valid || !stepInput.validity.valid) {
-//     bntSubmit.setAttribute('disabled', 'disabled');
-//   }
-// }
