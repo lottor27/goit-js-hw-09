@@ -17,16 +17,19 @@ btnStop.addEventListener('click', onClickStopEvent);
 
 
 function onClickStartEvent(event) {
-    isActive = 'true'
+    // isActive = 'true'
     btnStart.setAttribute("disabled", 'disabled');
-    console.log(event.target);
+
+    
     timerId = setInterval(() => {
-    bodyColor.style.backgroundColor = getRandomHexColor();
-    const onlineColorBody = bodyColor.style.backgroundColor;
+        bodyColor.style.backgroundColor = getRandomHexColor();
+        
+        const onlineColorBody = bodyColor.style.backgroundColor;
+        
     console.log(onlineColorBody)
-    localStorage.setItem('bgColor', onlineColorBody);
+    
     }, 1000);
-    console.log(localStorage.value);
+    
     
 };
 
