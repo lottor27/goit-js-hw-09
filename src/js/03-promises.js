@@ -9,31 +9,51 @@ const amountInput = document.querySelector('[name="amount"]');
 
 bntSubmit.addEventListener("click", onSubmit);
 
-  const firstDelay = delayInput.value
-const delay = stepInput.value;
-const position = amountInput.value;
+  
 
-  function onSubmit(event) {
-    event.preventDefault();
-    
-    const promises = amountInput.value
-   
-    const array = promises.map(promise => {
-      function createPromise(position, delay) {
-        const shouldResolve = Math.random() > 0.3;
-         setTimeout(() => 
-        if (shouldResolve) {
-          fulfilled(`✅ Fulfilled promise ${position} in ${delay}ms`);
-        } else {
-          rejected(`❌ Rejected promise ${position} in ${delay}ms`)
-        }
-      } 
-    });
-   
+function onSubmit(event) {
+  event.preventDefault();
+
+  const firstDelay = delayInput.value;
+  const delay = stepInput.value;
+  const position = amountInput.value;
+  
+  console.log(firstDelay);
+  console.log(delay);
+  console.log(position);
+  
+
+  const conter = () => {
+    for (let i = 0; i < position; i++) {
+      console.log(i);
+      createPromise(position, delay);
+    }
+    console.log('Конец работы');
+  }
+  const timerId = setTimeout(conter, `${firstDelay}`);
+
 }
+    
+
+function createPromise(position, delay) {
+  const shouldResolve = Math.random() > 0.3;
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve('Good');
+      }
+      reject('Bad');
+    }, `${delay}`);
+  })
+    .then(({ position, delay }) => {
+      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    })
+    .catch(({ position, delay }) => {
+      console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+    });
+};
 
 
-
-
-
+// createPromise(2, 1500)
+  
 
