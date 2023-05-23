@@ -11,7 +11,7 @@ btnStop.addEventListener('click', onClickStopEvent);
 btnStop.setAttribute('disabled', 'disabled');
 
 function onClickStartEvent(event) {
-  isActive = 'true';
+  
   btnStart.setAttribute('disabled', 'disabled');
   btnStop.removeAttribute('disabled');
 
