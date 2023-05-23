@@ -7,7 +7,7 @@ let timerId = null;
 btnStart.addEventListener("click", () => {
     btnStart.setAttribute('disabled', 'disabled');
 
-    timerIder = setInterval(() => {
+    timerId = setInterval(() => {
       bodyColor.style.backgroundColor = getRandomHexColor();
 
       const onlineColorBody = bodyColor.style.backgroundColor;
@@ -19,7 +19,7 @@ btnStart.addEventListener("click", () => {
 });
 
 btnStop.addEventListener('click', () => {
-    clearInterval(timerIder);
+    clearInterval(timerId);
     
     if (btnStart.hasAttribute("disabled")) {
         btnStart.removeAttribute('disabled');
