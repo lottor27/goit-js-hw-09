@@ -23,9 +23,8 @@ const options = {
     const startTime = Date.now();
     const currentTime = selectedDates[0];
     const deltaTime = currentTime - startTime;
-    const timeComponents = convertMs(deltaTime);
-
-    if (timeComponents.seconds <= 0) {
+    
+    if (deltaTime <= 0) {
       Notiflix.Report.failure(
         'Please choose a date in the future',
         'Travel to the past will break the space-time continuum',
@@ -34,14 +33,9 @@ const options = {
       return;
     } else {
       startBtn.removeAttribute('disabled');
-      days.textContent = timeComponents.days;
-      hours.textContent = timeComponents.hours;
-      minutes.textContent = timeComponents.minutes;
-      seconds.textContent = timeComponents.seconds;
     }
   },
 };
-
 
 
 const timerFlat = flatpickr(inputField, options);
@@ -52,26 +46,35 @@ const timer = {
   isActive: false,
   start() {
     if (this.isActive) {
+      
       return
     }
+
     const startTimeTimer = timerFlat.selectedDates[0];
+
     this.timerId = setInterval(() => {
       this.isActive = true;
       const currentTimeTimer = Date.now();
       const deltaTimeTimer = (currentTimeTimer - startTimeTimer) * -1;
       const timeComponentsTimer = convertMs(deltaTimeTimer);
+
       if (deltaTimeTimer <= 0) {
         clearInterval(this.timerId);
-        console.log('Ну все же');
         this.isActive = false;
         startBtn.setAttribute('disabled', 'disabled');
+        timerFlat.element.disabled = false;
         return
       }
+
       console.log(timeComponentsTimer);
       days.textContent = timeComponentsTimer.days;
       hours.textContent = timeComponentsTimer.hours;
       minutes.textContent = timeComponentsTimer.minutes;
       seconds.textContent = timeComponentsTimer.seconds;
+      
+      startBtn.setAttribute('disabled', 'disabled');
+      timerFlat.element.disabled = true;
+
     }, 1000);
   },
   stop() {

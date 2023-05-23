@@ -31,6 +31,7 @@ function onSubmit(event) {
         });
     }
   }
+   event.currentTarget.reset();
 }
 
 function createPromise(amount, delay) {
