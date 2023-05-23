@@ -25,6 +25,7 @@ btnStop.addEventListener('click', () => {
         btnStart.removeAttribute('disabled');
     }
 });
+ 
 
 // const formDataLocalStorage =
 // localStorage.getItem('bgColor') || localStorage.setItem('bgColor', bodyColor.style.backgroundColor);
