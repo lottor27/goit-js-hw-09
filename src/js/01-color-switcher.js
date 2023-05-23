@@ -2,7 +2,7 @@
 const bodyColor = document.querySelector('body');
 const btnStart = document.querySelector("button[data-start]")
 const btnStop = document.querySelector("button[data-stop]");
-
+let timerId = null;
 
 btnStart.addEventListener("click", () => {
     btnStart.setAttribute('disabled', 'disabled');
@@ -19,7 +19,7 @@ btnStart.addEventListener("click", () => {
 });
 
 btnStop.addEventListener('click', () => {
- clearInterval(timerIder);
+    clearInterval(timerIder);
     
     if (btnStart.hasAttribute("disabled")) {
         btnStart.removeAttribute('disabled');
