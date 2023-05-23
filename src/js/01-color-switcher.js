@@ -6,7 +6,13 @@ const btnStop = document.querySelector("button[data-stop]");
 
 btnStart.addEventListener("click", onClickStartEvent);
 
-btnStop.addEventListener('click', onClickStopEvent);
+btnStop.addEventListener('click', () => {
+ clearInterval(timerId);
+    
+    if (btnStart.hasAttribute("disabled")) {
+        btnStart.removeAttribute('disabled');
+    }
+});
 
 // const formDataLocalStorage =
 // localStorage.getItem('bgColor') || localStorage.setItem('bgColor', bodyColor.style.backgroundColor);
@@ -33,13 +39,7 @@ function onClickStartEvent(event) {
     
 };
 
-function onClickStopEvent(event) {
-    clearInterval(timerId);
-    console.log(event.target);
-    if (btnStart.hasAttribute("disabled")) {
-        btnStart.removeAttribute('disabled');
-    }
-}
+// function onClickStopEvent
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
